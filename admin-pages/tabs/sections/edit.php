@@ -120,6 +120,8 @@ class NHS_SectionsEditTabAdminPage extends APL_TabAdminPage
 	public function print_section_info( $args )
 	{
 		apl_print( 'print_section_info' );
+		
+		apl_print($this->section);
 	}
 
 
@@ -227,7 +229,7 @@ class NHS_SectionsEditTabAdminPage extends APL_TabAdminPage
 			$terms = ( array_key_exists($taxname, $this->section) ? $this->section[$taxname] : array() );
 			?>
 			
-			<?php foreach( get_terms( $taxname ) as $term ): ?>
+			<?php foreach( get_terms( $taxname, array( 'hide_empty' => false ) ) as $term ): ?>
 		
 			<div>
 			<input type="checkbox" 
@@ -363,7 +365,7 @@ class NHS_SectionsEditTabAdminPage extends APL_TabAdminPage
 		}
 		
 		// update existing section.
-		$this->model->update_section( $settings );
+		$this->model->update_section( $key, $settings );
 		return $this->model->get_sections();
 	}
 
