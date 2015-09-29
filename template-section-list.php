@@ -14,7 +14,6 @@
 
 		<?php extract($story->nhs_data); ?>
 
-
 		<div class="post featured-post">
 
 			<?php echo nhs_get_anchor( $link, $title ); ?>
@@ -61,16 +60,13 @@
 					endforeach;
 					?>
 			
-					</div><!-- .contents -->
+					</div><!-- .description -->
 
 				<?php endif; ?>
 			
-			</div><!-- .description -->
+			</div><!-- .details -->
 			
-		</a>
-		</div><!-- .story -->
-
-
+			</a>
 
 		</div><!-- .post.featured-post -->
 
