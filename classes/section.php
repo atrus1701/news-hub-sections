@@ -196,7 +196,7 @@ class NHS_Section
 	 */
 	public function get_stories( $num_of_stories, $type = 'featured', $post_process = TRUE )
 	{
-		$story_posts = $this->get_post_list( 0, $this->num_stories[$type] );
+		$story_posts = $this->get_post_list( 0, $num_of_stories );
 
 		if( $post_process ):
 		
