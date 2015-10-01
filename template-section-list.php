@@ -1,6 +1,6 @@
 <?php global $nhs_section, $nhs_stories; ?>
 
-<div class="section-box <?php echo $nhs_section->name; ?>-section <?php echo $nhs_section->thumbnail_image; ?>-image">
+<div class="section-box <?php echo $nhs_section->key; ?>-section <?php echo $nhs_section->thumbnail_image; ?>-image">
 
 	<h2>
 	<?php echo nhs_get_anchor( 
@@ -10,15 +10,16 @@
 		$nhs_section->title ); ?>
 	</h2>
 	
-	<?php foreach( $nhs_stories as $story ): ?>
 
-		<?php extract($story->nhs_data); ?>
+	<?php foreach( $nhs_stories as $nhs_story ): ?>
 
-		<div class="post featured-post">
+		<?php extract($nhs_story->nhs_data); ?>
+
+		<div <?php post_class( 'story '.$nhs_section->key.'-section '.$nhs_section->thumbnail_image.'-image' ); ?>>
 
 			<?php echo nhs_get_anchor( $link, $title ); ?>
 
-			<?php if( $section->thumbnail_image !== 'none' ): ?>
+			<?php if( $nhs_section->thumbnail_image !== 'none' ): ?>
 				<div class="image">
 					
 					<?php if( $image ): ?>
@@ -40,26 +41,10 @@
 
 					<div class="description">
 
-					<?php 
-					foreach( $description as $key => $value ):
-						if( is_array($value) ):
-							
-							?><div class="<?php echo $key; ?>"><?php
-							
-							foreach( $value as $k => $v ):
-								?><div class="<?php echo $k; ?>"><?php echo $v; ?></div><?php
-							endforeach;
-						
-							?></div><?php
-							
-						else:
-
-							?><div class="<?php echo $key; ?>"><?php echo $value; ?></div><?php
-							
-						endif;
-					endforeach;
-					?>
-			
+					<?php foreach( $description as $key => $value ): ?>
+						<div class="<?php echo $key; ?>"><?php echo $value; ?></div>
+					<?php endforeach; ?>
+					
 					</div><!-- .description -->
 
 				<?php endif; ?>
@@ -68,7 +53,7 @@
 			
 			</a>
 
-		</div><!-- .post.featured-post -->
+		</div><!-- .post -->
 
 	<?php endforeach; ?>
 

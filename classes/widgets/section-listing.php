@@ -70,7 +70,6 @@ class NHS_WidgetSectionListingControl extends WidgetShortcodeControl
 		$options = $this->merge_options( $options );
 		extract( $options );
 		
-		apl_print($options);
 		$sections = $this->model->get_sections();
 		?>
 		
@@ -81,7 +80,7 @@ class NHS_WidgetSectionListingControl extends WidgetShortcodeControl
 		<?php foreach( $sections as $s ): ?>
 			<option value="<?php echo $s['key']; ?>"
 				<?php selected( $section, $s['key'] ); ?>>
-			<?php echo $s['title']; ?>
+			<?php echo $s['name']; ?>
 			</option>
 		<?php endforeach; ?>
 		</select>
@@ -128,6 +127,8 @@ class NHS_WidgetSectionListingControl extends WidgetShortcodeControl
 	 */
 	public function process_options( $options )
 	{
+		$options['title'] = $options['section'];
+		$options['widget_name'] = $options['section'];
 		return $options;
 	}
 	
@@ -140,13 +141,13 @@ class NHS_WidgetSectionListingControl extends WidgetShortcodeControl
 	public function print_control( $options, $args = null )
 	{
 		global $nhs_section, $nhs_stories;
-		
+
 		$options = $this->merge_options( $options );
 		if( !$args ) $args = $this->get_args();
 		
 		extract( $options );
 
-		$section = $this->model->get_section_by_name( $section );
+		$section = $this->model->get_section_by_key( $section );
 		if( empty($section) ) return;
 
 		$section = new NHS_Section( $section );
