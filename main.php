@@ -89,6 +89,8 @@ if( is_admin() ):
 endif;
 
 
+add_filter( 'pre_get_posts', 'nhs_alter_main_query' );
+
 
 /**
  * Setup the admin pages.
@@ -323,6 +325,28 @@ if( !function_exists('nhs_get_empty_section') ):
 function nhs_get_empty_section()
 {
 	return new NHS_Section( array('name' => '') );
+}
+endif;
+
+
+/**
+ * Alters the default query made when querying the News section.
+ */
+if( !function_exists('nhs_alter_main_query') ):
+function nhs_alter_main_query( $wp_query )
+{
+	if( is_admin() || !$wp_query->is_main_query() ) return;
+
+	$section = nhs_get_wpquery_section();
+	if( $section->key == 'none' || $section->key == '' ) return;
+
+	if( is_archive() )
+	{
+		if( is_feed() )
+			$wp_query->set( 'posts_per_page', $section->rss_feed_stories );
+		else
+			$wp_query->set( 'posts_per_page', $section->archive_page_stories );
+	}
 }
 endif;
 

@@ -52,6 +52,11 @@ class NHS_Section
 	 * @var  string
 	 */
 	public $thumbnail_image;
+
+
+	public $archive_page_stories;
+
+	public $rss_feed_stories;
 	
 	
 	/**
@@ -111,6 +116,9 @@ class NHS_Section
 		{
 			if( count($terms) == 0 ) unset($this->taxonomies[$taxname]);
 		}
+
+		$this->archive_page_stories = $section['archive_page_stories'];
+		$this->rss_feed_stories = $section['rss_feed_stories'];
 	}
 	
 	/**
@@ -145,9 +153,10 @@ class NHS_Section
 			'offset' => $offset,
 			'post__not_in' => $omit_ids,
 			'tax_query' => $this->create_tax_query(),
+			'ignore_sticky_posts' => FALSE,
 			'section' => $this
 		);
-		
+
 		$query = new WP_Query( $args );
 		
 		if( $query->have_posts() )
@@ -275,7 +284,7 @@ class NHS_Section
 	private function apply_filters( $name, $story, $post )
 	{
 		$story = apply_filters( 'nhs-'.$name, $story, $post );
-		$story = apply_filters( 'nhs-'.$this->name.'-'.$name, $story, $post );
+		$story = apply_filters( 'nhs-'.$this->key.'-'.$name, $story, $post );
 		
 		if( is_a($post, 'WP_Post') )
 		$story = apply_filters( 'nhs-'.$post->post_type.'-'.$name, $story, $post );
@@ -353,7 +362,7 @@ class NHS_Section
 	{
 		$story = array();
 		$story['title'] = $this->get_title( $post );
-		$story['image'] = $this->get_image( $post->ID, 'featured' );
+		$story['image'] = $this->get_image( $post->ID, 'thumbnail' );
 		$story['description'] = array();
 		$story['description']['text'] = $this->get_content( $post );
 
