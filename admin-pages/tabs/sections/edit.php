@@ -120,8 +120,6 @@ class NHS_SectionsEditTabAdminPage extends APL_TabAdminPage
 	public function print_section_info( $args )
 	{
 		apl_print( 'print_section_info' );
-		
-		apl_print($this->section);
 	}
 
 
