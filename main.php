@@ -313,18 +313,33 @@ endif;
 if( !function_exists('nhs_get_default_section') ):
 function nhs_get_default_section()
 {
-	return new NHS_Section( array('name' => 'none') );
+	return new NHS_Section( array('key' => 'none') );
 }
 endif;
-	
+
 
 /**
  * 
  */
-if( !function_exists('nhs_get_empty_section') ):
-function nhs_get_empty_section()
+if( !function_exists('nhs_get_taxonomies') ):
+function nhs_get_taxonomies( $post_id = -1 )
 {
-	return new NHS_Section( array('name' => '') );
+	global $post;
+	
+	if( $post_id == -1 )
+		$post_id = $post->ID;
+		
+	$all_taxonomies = get_taxonomies( '', 'names' );
+	
+	$taxonomies = array();
+	foreach( $all_taxonomies as $taxname )
+	{
+		$terms = wp_get_post_terms( $post_id, $taxname, array('fields' => 'slugs') );
+		if( count($terms) > 0 )
+			$taxonomies[$taxname] = $terms;
+	}
+	
+	return $taxonomies;
 }
 endif;
 
