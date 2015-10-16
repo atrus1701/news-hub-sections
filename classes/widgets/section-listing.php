@@ -52,14 +52,28 @@ class NHS_WidgetSectionListingControl extends WidgetShortcodeControl
 	
 	
 	/**
-	 * Enqueues the scripts or styles needed for the control in the site frontend.
+	 * Enqueues the scripts or styles needed for the control in the site admin.
 	 */
-	public function enqueue_scripts()
+	public function admin_enqueue_scripts()
 	{
-
+		wp_enqueue_script( 'section-listing', NHS_PLUGIN_URL.'/classes/widgets/section-listing.js' );
 	}
 	
-	
+
+	/**
+	 * Update a particular instance.
+	 * Override function from WP_Widget parent class.
+	 * @param  array  $new_options  New options set in the widget form by the user.
+	 * @param  array  $old_options  Old options from the database.
+	 * @return  array|bool  The settings to save, or false to cancel saving.
+	 */
+	public function update( $new_options, $old_options )
+	{
+		$new_options['title'] = $new_options['section'];
+		return $new_options;
+	}
+
+
 	/**
 	 * Output the widget form in the admin.
 	 * Use this function instead of form.
@@ -69,9 +83,23 @@ class NHS_WidgetSectionListingControl extends WidgetShortcodeControl
 	{
 		$options = $this->merge_options( $options );
 		extract( $options );
-		
+
 		$sections = $this->model->get_sections();
+	 	$section_posts = array();
+		if( array_key_exists($section, $sections) )
+		{
+			$s = new NHS_Section( $sections[$section] );
+			$section_posts = $s->get_post_list(0, 20);
+		}
+
+		for( $i = count($posts); $i < $items; $i++ )
+		{
+			$posts[] = -1;
+		}
+
 		?>
+
+		<input type="hidden" class="section-data" value="<?php echo $section.','.$items; ?>" />
 		
 		<p>
 		<label for="<?php echo $this->get_field_id( 'section' ); ?>"><?php _e( 'Section:' ); ?></label> 
@@ -96,7 +124,28 @@ class NHS_WidgetSectionListingControl extends WidgetShortcodeControl
 			<?php endfor; ?>
 		</select>
 		</p>
+
+		<p><button>Update</button></p>
+
+		<div class="post-list">
+
+		<?php for( $i = 0; $i < $items; $i++ ): ?>
 		
+			<p>
+			<select id="<?php echo $this->get_field_id( 'post-'.($i+1) ); ?>" name="<?php echo $this->get_field_name( 'posts' ).'['.$i.']'; ?>">
+				<option value="-1" <?php selected(-1, $posts[$i]); ?>>-- Latest Post --</option>
+				<?php foreach( $section_posts as $p ): ?>
+				
+					<option value="<?php echo $p->ID; ?>" <?php selected($posts[$i], $p->ID); ?>><?php echo $p->post_title; ?></option>
+				
+				<?php endforeach; ?>
+			</select>
+			</p>
+
+		<?php endfor; ?>
+
+		</div>
+
 		<?php
 	}
 	
@@ -113,8 +162,10 @@ class NHS_WidgetSectionListingControl extends WidgetShortcodeControl
 		$keys = array_keys($section);
 
 		$defaults['section'] = ( count($section) > 0 ? $section[$keys[0]]['key'] : '' );
+		$defaults['title'] = $defaults['section'];
 		$defaults['items'] = 2;
-		
+		$defaults['posts'] = array();
+
 		return $defaults;
 	}
 	
@@ -128,11 +179,10 @@ class NHS_WidgetSectionListingControl extends WidgetShortcodeControl
 	public function process_options( $options )
 	{
 		$options['title'] = $options['section'];
-		$options['widget_name'] = $options['section'];
 		return $options;
 	}
 	
-	
+
 	/**
 	 * Echo the widget or shortcode contents.
 	 * @param   array  $options  The current settings for the control.

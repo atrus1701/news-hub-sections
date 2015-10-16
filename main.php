@@ -91,7 +91,9 @@ endif;
 
 add_filter( 'pre_get_posts', 'nhs_alter_main_query' );
 
+add_action( 'wp_ajax_news-hub-sections', 'nhs_perform_ajax_request' );
 
+ 
 /**
  * Setup the admin pages.
  */
@@ -362,6 +364,52 @@ function nhs_alter_main_query( $wp_query )
 		else
 			$wp_query->set( 'posts_per_page', $section->archive_page_stories );
 	}
+}
+endif;
+
+
+/**
+ * AJAX request.
+ */
+if( !function_exists('nhs_perform_ajax_request') ):
+function nhs_perform_ajax_request()
+{
+	global $nhs_sections;
+
+	$output = array(
+		'status' => true,
+		'message' => '',
+	);
+
+	switch( $_GET['ajax-action'] )
+	{
+		case 'get-post-list':
+
+			$section = $_GET['section'];
+			if( !$section )
+			{
+				$output['status'] = false;
+				$output['message'] = 'No section specififed.';
+				break;
+			}
+
+			if( array_key_exists($section, $nhs_sections) )
+			{
+				$s = $nhs_sections[$section];
+			}
+			else
+			{
+				$output['status'] = false;
+				$output['message'] = 'Invalid section: '.$section;
+				break;
+			}
+
+			$output['posts'] = $s->get_post_list(0, 20);
+			break;
+	}
+
+	echo json_encode( $output );
+	exit();
 }
 endif;
 

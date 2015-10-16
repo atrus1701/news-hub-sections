@@ -53,9 +53,16 @@ class NHS_Section
 	 */
 	public $thumbnail_image;
 
-
+	/**
+	 * 
+	 * @var  int
+	 */
 	public $archive_page_stories;
 
+	/**
+	 * 
+	 * @var  int
+	 */
 	public $rss_feed_stories;
 	
 	
@@ -153,7 +160,6 @@ class NHS_Section
 			'offset' => $offset,
 			'post__not_in' => $omit_ids,
 			'tax_query' => $this->create_tax_query(),
-			'ignore_sticky_posts' => FALSE,
 			'section' => $this
 		);
 
