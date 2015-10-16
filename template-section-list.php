@@ -20,17 +20,15 @@
 			<?php echo nhs_get_anchor( $link, $title ); ?>
 
 			<?php if( $nhs_section->thumbnail_image !== 'none' ): ?>
-				<div class="image">
-					
-					<?php if( $image ): ?>
-						<img src="<?php echo $image; ?>" alt="Featured Image" />
-					<?php endif; ?>
-					
-					<?php if( $embed ): ?>
-						<?php echo $embed; ?>
-					<?php endif; ?>
+				<?php if( $nhs_section->thumbnail_image !== 'none' ): ?>
+					<div class="image" <?php if($image) echo 'style="background-image:url(\''.$image.'\')"'; ?> title="Featured Image">
+						
+						<?php if( $embed ): ?>
+							<?php echo $embed; ?>
+						<?php endif; ?>
 
-				</div><!-- .image -->
+					</div><!-- .image -->
+				<?php endif; ?>
 			<?php endif; ?>
 
 			<div class="details">
