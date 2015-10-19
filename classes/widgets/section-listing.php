@@ -205,12 +205,31 @@ class NHS_WidgetSectionListingControl extends WidgetShortcodeControl
 		echo $args['before_widget'];
 		echo '<div id="section-listing-control-'.self::$index.'" class="wscontrol section-listing-control">';
 		
-		$stories = $section->get_stories( $items, 'featured', TRUE );
+		$most_recent_posts = $section->get_post_list( 0, $items, $posts );
+		$story_posts = array_fill( 0, $items, NULL );
+		
+		$j = 0;
+		for( $i = 0; $i < $items; $i++ )
+		{
+			if( $posts[$i] !== -1 )
+			{
+				$story_posts[$i] = get_post( $posts[$i] );
+			}
+
+			if( $story_posts[$i] === NULL && count($most_recent_posts) > $j )
+			{
+				$story_posts[$i] = $most_recent_posts[$j];
+				$j++;
+			}
+		}
+
+		array_filter( $story_posts );
+		$section->process_stories( $story_posts, 'featured' );
 
 		$template_section_list = apply_filters( 'nhs-template-section-list', NHS_PLUGIN_PATH.'/template-section-list.php', $section );
 
 		$nhs_section = $section;
-		$nhs_stories = $stories;
+		$nhs_stories = $story_posts;
 		include( $template_section_list );
 	
 		echo '</div>';

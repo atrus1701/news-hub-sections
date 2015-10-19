@@ -212,9 +212,15 @@ class NHS_Section
 	public function get_stories( $num_of_stories, $type = 'featured', $post_process = TRUE )
 	{
 		$story_posts = $this->get_post_list( 0, $num_of_stories );
-
-		if( $post_process ):
 		
+		if( $post_process ) $this->process_stories( $story_posts );
+		
+		return $story_posts;
+	}
+
+
+	public function process_stories( &$story_posts, $type = 'featured' )
+	{
 		switch( $type )
 		{
 			case 'featured':
@@ -240,10 +246,6 @@ class NHS_Section
 				}
 				break;
 		}
-		
-		endif;
-
-		return $story_posts;
 	}
 
 
