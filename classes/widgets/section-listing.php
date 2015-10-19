@@ -99,12 +99,14 @@ class NHS_WidgetSectionListingControl extends WidgetShortcodeControl
 
 		?>
 
+		<div id="section-listing-control-<?php echo self::$index; ?>" class="wsadmincontrol section-listing-control">
+
 		<input type="hidden" class="section-data" value="<?php echo $section.','.$items; ?>" />
 		
 		<p>
 		<label for="<?php echo $this->get_field_id( 'section' ); ?>"><?php _e( 'Section:' ); ?></label> 
 		<br/>
-		<select name="<?php echo $this->get_field_name( 'section' ); ?>">
+		<select name="<?php echo $this->get_field_name( 'section' ); ?>" class="widefat">
 		<?php foreach( $sections as $s ): ?>
 			<option value="<?php echo $s['key']; ?>"
 				<?php selected( $section, $s['key'] ); ?>>
@@ -116,7 +118,7 @@ class NHS_WidgetSectionListingControl extends WidgetShortcodeControl
 		
 		<p>
 		<label for="<?php echo $this->get_field_id( 'items' ); ?>"><?php _e( 'Number of items:' ); ?></label> 
-		<select id="<?php echo $this->get_field_id( 'items' ); ?>" name="<?php echo $this->get_field_name( 'items' ); ?>">
+		<select id="<?php echo $this->get_field_id( 'items' ); ?>" name="<?php echo $this->get_field_name( 'items' ); ?>" class="widefat">
 			<?php for( $i = self::$MIN_ITEMS; $i < self::$MAX_ITEMS+1; $i++ ): ?>
 			
 				<option value="<?php echo $i; ?>" <?php selected($i, $items); ?>><?php echo $i; ?></option>
@@ -132,7 +134,7 @@ class NHS_WidgetSectionListingControl extends WidgetShortcodeControl
 		<?php for( $i = 0; $i < $items; $i++ ): ?>
 		
 			<p>
-			<select id="<?php echo $this->get_field_id( 'post-'.($i+1) ); ?>" name="<?php echo $this->get_field_name( 'posts' ).'['.$i.']'; ?>">
+			<select id="<?php echo $this->get_field_id( 'post-'.($i+1) ); ?>" name="<?php echo $this->get_field_name( 'posts' ).'['.$i.']'; ?>" class="widefat">
 				<option value="-1" <?php selected(-1, $posts[$i]); ?>>-- Latest Post --</option>
 				<?php foreach( $section_posts as $p ): ?>
 				
@@ -144,7 +146,9 @@ class NHS_WidgetSectionListingControl extends WidgetShortcodeControl
 
 		<?php endfor; ?>
 
-		</div>
+		</div><!-- .post-list -->
+
+		</div><!-- .wsadmincontrol.section-listing-control -->
 
 		<?php
 	}

@@ -19,6 +19,8 @@ jQuery(document).ready(
 	{
 		// setup the Section Listing widgets
 		jQuery("div:regex(id,widget-([0-9]+)_section_listing-([0-9]+))").SectionListingWidgetEditor();
+
+		jQuery(".customize-control-widget_form .section-listing-control").parent().parent().find('.widget-control-save').show();
 	}
 );
 
@@ -53,12 +55,13 @@ jQuery(document).ready(
 
 			$(update_button).click( function(e) {
 
-				e.preventDefault()
+				e.preventDefault();
 				update_post_edit( section_select, items_select, hidden_input, title, post_list, name );
 				return false;
 
 			});
 
+			$(items_select).off('click').off('change');
 		});
 
 
@@ -117,7 +120,7 @@ jQuery(document).ready(
 						selected_item_id = parseInt(previous_selected_items[i]);
 
 					var html = '<p>';
-					html += '<select name="'+name+'[posts]['+i+']">';
+					html += '<select name="'+name+'[posts]['+i+']" class="widefat">';
 
 					html += '<option value="-1" ';
 					if( selected_item_id == -1 )
