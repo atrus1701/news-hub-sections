@@ -19,8 +19,6 @@ jQuery(document).ready(
 	{
 		// setup the Section Listing widgets
 		jQuery("div:regex(id,widget-([0-9]+)_section_listing-([0-9]+))").SectionListingWidgetEditor();
-
-		jQuery(".customize-control-widget_form .section-listing-control").parent().parent().find('.widget-control-save').show();
 	}
 );
 
@@ -39,20 +37,29 @@ jQuery(document).ready(
 		/**
 		 * 
 		 */
-		return this.each(function() {
-			
-			var section_select = $(this).find('.widget-content select[name^="widget-section_listing"]').get(0);
-			var items_select = $(this).find('.widget-content select[name^="widget-section_listing"]').get(1);
-			var title = $(this).find('.widget-top h4 .in-widget-title');
-			var update_button = $(this).find('.widget-content button').get(0);
-			var hidden_input = $(this).find('.widget-content .section-data');
-			var post_list = $(this).find('.widget-content .post-list');
+		return this.each(function()
+		{
+			$( document ).on( 'widget-updated', widget_updated );
+			$( document ).on( 'widget-synced', [this, []] );
+			$( document ).trigger( 'widget-updated', [this] );
+		});
+
+
+		/**
+		 * 
+		 */
+		function widget_updated( event, self )
+		{
+			var section_select = $(self).find('.widget-content select[name^="widget-section_listing"]').get(0);
+			var items_select = $(self).find('.widget-content select[name^="widget-section_listing"]').get(1);
+			var hidden_input = $(self).find('.widget-content .section-data');
+			var title = $(self).find('.widget-top h4 .in-widget-title');
+			var post_list = $(self).find('.widget-content .post-list');
 			var section_select_name = $(section_select).attr('name');
 			var name = section_select_name.split('][');
 			name = name[0] + ']';
 
-			$(title).text( ': '+$(section_select).find(":selected").text() );
-
+			var update_button = $(self).find('.widget-content button');
 			$(update_button).click( function(e) {
 
 				e.preventDefault();
@@ -61,8 +68,8 @@ jQuery(document).ready(
 
 			});
 
-			$(items_select).off('click').off('change');
-		});
+			$(self).find('.widget-control-save').show();
+		}
 
 
 		/**
@@ -141,10 +148,7 @@ jQuery(document).ready(
 					$(post_list).append( html );
 				}
 
-				
 				$(hidden_input).val( current_section+','+current_items );
-				$(title).text( ': '+$(section_select).find(':selected').text() );
-
 			})
 			.fail(function( jqXHR, textStatus )
 			{
