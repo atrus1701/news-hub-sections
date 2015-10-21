@@ -97,11 +97,15 @@ class NHS_WidgetSectionListingControl extends WidgetShortcodeControl
 			$posts[] = -1;
 		}
 
+		$so = $this->model->get_section_by_key( $section );
+		$section_name = ( $so ? $so['name'] : '' );
+
 		?>
 
 		<div id="section-listing-control-<?php echo self::$index; ?>" class="wsadmincontrol section-listing-control">
 
 		<input type="hidden" class="section-data" value="<?php echo $section.','.$items; ?>" />
+		<input type="hidden" class="title" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $section_name ); ?>" />
 		
 		<p>
 		<label for="<?php echo $this->get_field_id( 'section' ); ?>"><?php _e( 'Section:' ); ?></label> 
@@ -166,7 +170,7 @@ class NHS_WidgetSectionListingControl extends WidgetShortcodeControl
 		$keys = array_keys($section);
 
 		$defaults['section'] = ( count($section) > 0 ? $section[$keys[0]]['key'] : '' );
-		$defaults['title'] = $defaults['section'];
+		$defaults['title'] = ( count($section) > 0 ? $section[$keys[0]]['name'] : '' );
 		$defaults['items'] = 2;
 		$defaults['posts'] = array();
 
@@ -182,7 +186,8 @@ class NHS_WidgetSectionListingControl extends WidgetShortcodeControl
 	 */
 	public function process_options( $options )
 	{
-		$options['title'] = $options['section'];
+		$section = $this->model->get_section_by_key( $options['section'] );
+		$options['title'] = ( $section ? $section['name'] : '' );
 		return $options;
 	}
 	
