@@ -215,7 +215,7 @@ class NHS_WidgetSectionListingControl extends WidgetShortcodeControl
 		$j = 0;
 		for( $i = 0; $i < $items; $i++ )
 		{
-			if( $posts[$i] !== -1 )
+			if( $posts[$i] !== -1 && $posts[$i] !== NULL )
 			{
 				$story_posts[$i] = get_post( $posts[$i] );
 			}
@@ -227,7 +227,7 @@ class NHS_WidgetSectionListingControl extends WidgetShortcodeControl
 			}
 		}
 
-		array_filter( $story_posts );
+		$story_posts = array_filter( $story_posts );
 		$section->process_stories( $story_posts, 'featured' );
 
 		$template_section_list = apply_filters( 'nhs-template-section-list', NHS_PLUGIN_PATH.'/template-section-list.php', $section );
