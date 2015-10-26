@@ -3,11 +3,7 @@
 <div class="section-box <?php echo $nhs_section->key; ?>-section <?php echo $nhs_section->thumbnail_image; ?>-image">
 
 	<h2>
-	<?php echo nhs_get_anchor( 
-		$nhs_section->get_section_link(), 
-		$nhs_section->name.' Archives', 
-		null,
-		$nhs_section->title ); ?>
+		<a href="<?php echo $nhs_section->get_section_link(); ?>" title="<?php echo $nhs_section->title; ?> Archives"><?php echo $nhs_section->title; ?></a>
 	</h2>
 	
 
@@ -15,25 +11,33 @@
 
 		<?php extract($nhs_story->nhs_data); ?>
 
-		<div <?php post_class( 'story '.$nhs_section->key.'-section '.$nhs_section->thumbnail_image.'-image' ); ?>>
-
-			<?php echo nhs_get_anchor( $link, $title ); ?>
-
-			<?php if( $nhs_section->thumbnail_image !== 'none' ): ?>
-				<?php if( $nhs_section->thumbnail_image !== 'none' ): ?>
-					<div class="image" <?php if($image) echo 'style="background-image:url(\''.$image.'\')"'; ?> title="Featured Image">
-						
-						<?php if( $embed ): ?>
-							<?php echo $embed; ?>
-						<?php endif; ?>
-
-					</div><!-- .image -->
-				<?php endif; ?>
-			<?php endif; ?>
+		<div <?php post_class( 'story '.$nhs_section->key.'-section '.$nhs_section->thumbnail_image.'-image listing' ); ?>>
+			
+			<?php
+			switch( $nhs_section->thumbnail_image ):
+				case 'landscape':
+				case 'portrait':
+					?><div class="image" <?php if($image) echo 'style="background-image:url(\''.$image.'\')"'; ?> title="Featured Image"></div><!-- .image --><?php
+					break;
+				case 'normal':
+					if( $image ):
+						?><div class="image" title="Featured Image"><img src="<?php if($image) echo $image; ?>" /></div><!-- .image --><?php
+					endif;
+					break;
+				case 'embed':
+					?><div class="image"><?php if( $embed ) echo $embed; ?></div><!-- .image --><?php
+					break;
+				default:
+					break;
+			endswitch;
+			?>
 
 			<div class="details">
 			
-				<h3><?php echo $title; ?></h3>
+				<h3><?php echo vtt_get_anchor( $link, $title, null, $title ); ?></h3>
+				<?php if( isset($byline) ): ?>
+					<div class="byline"><?php echo $byline; ?></div>
+				<?php endif; ?>
 				
 				<?php if( count($description) > 0 ): ?>
 
@@ -49,14 +53,12 @@
 			
 			</div><!-- .details -->
 			
-			</a>
-
 		</div><!-- .post -->
 
 	<?php endforeach; ?>
 
 	<div class="more">
-		<?php echo nhs_get_anchor( 
+		<?php echo vtt_get_anchor( 
 			$nhs_section->get_section_link(), 
 			$nhs_section->name.' Archives', 
 			null,
