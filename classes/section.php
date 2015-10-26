@@ -321,6 +321,7 @@ class NHS_Section
 		$story['title'] = $this->get_title( $post );
 		$story['link'] = $this->get_link( $post );
 		$story['target'] = $this->get_link_target( $post, $story['link'] );
+		$story['byline'] = $this->get_byline( $post );
 		
 		if( $this->thumbnail_image == 'embed' )
 			$story['embed'] = $this->get_embed_code( $post->post_content );
@@ -346,6 +347,7 @@ class NHS_Section
 		$story['title'] = $this->get_title( $post );
 		$story['link'] = $this->get_link( $post );
 		$story['target'] = $this->get_link_target( $post, $story['link'] );
+		$story['byline'] = $this->get_byline( $post );
 		
 		if( $this->thumbnail_image == 'embed' )
 			$story['embed'] = $this->get_embed_code( $post->post_content );
@@ -380,6 +382,7 @@ class NHS_Section
 		$story = array();
 		$story['title'] = $this->get_title( $post );
 		$story['image'] = $this->get_image( $post->ID, 'thumbnail' );
+		$story['byline'] = $this->get_byline( $post );
 		$story['description'] = array();
 		$story['description']['text'] = $this->get_content( $post );
 
@@ -418,7 +421,21 @@ class NHS_Section
 		return $target;
 	}
 	
+
+	/**
+	 * 
+	 */
+	public function get_byline( $post )
+	{
+		$date = date( 'F d, Y', strtotime($post->post_modified) );
+		
+		$author = get_the_author_meta( 'display_name', $post->post_author );
+		$url = get_author_posts_url( $post->post_author );
+		
+		return $date.' by <a href="'.$url.'" title="Posts by '.$author.'">'.$author.'</a>';
+	}
 	
+
 	/**
 	 * 
 	 */
