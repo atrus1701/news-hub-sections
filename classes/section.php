@@ -65,6 +65,13 @@ class NHS_Section
 	 */
 	public $rss_feed_stories;
 	
+
+	/**
+	 * 
+	 * @var  int
+	 */
+	public $priority;
+
 	
 	/**
 	 * Default Constructor.
@@ -126,6 +133,8 @@ class NHS_Section
 
 		$this->archive_page_stories = $section['archive_page_stories'];
 		$this->rss_feed_stories = $section['rss_feed_stories'];
+
+		$this->priority = ( isset($section['priority']) ? intval($section['priority']) : 5 );
 	}
 	
 	/**

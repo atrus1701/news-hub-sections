@@ -112,6 +112,14 @@ class NHS_SectionsAddTabAdminPage extends APL_TabAdminPage
 			'print_field_layout',
 			array()
 		);
+
+		$this->add_field(
+			'section-info',
+			'priority',
+			'Priority',
+			'print_field_priority',
+			array()
+		);
 	}
 
 
@@ -302,6 +310,26 @@ class NHS_SectionsAddTabAdminPage extends APL_TabAdminPage
 		<strong>RSS Feed</strong>
 		<?php $this->print_number_selection( 'rss_feed_stories', $this->section['rss_feed_stories'] ); ?>
 
+		<?php
+	}
+
+
+	/**
+	 * 
+	 */
+	public function print_field_priority( $args )
+	{
+		?>
+		<select name="<?php apl_name_e( NHS_SECTIONS, 'priority' ); ?>">
+
+		<?php foreach( range( -1, 10 ) as $i ): ?>
+			<option value="<?php echo $i; ?>" 
+			    <?php selected( $i, $this->section['priority'] ); ?>>
+			<?php echo $i; ?>
+			</option>
+		<?php endforeach; ?>
+		
+		</select>
 		<?php
 	}
 

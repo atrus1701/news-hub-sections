@@ -171,6 +171,7 @@ class NHS_Model
 			'thumbnail_image'		=> 'none',
 			'archive_page_stories'	=> 10,
 			'rss_feed_stories'		=> 10,
+			'priority'				=> 5,
 		);
 	}
 
@@ -192,7 +193,7 @@ class NHS_Model
 			$section['taxonomies'] = array();
 		}
 
-		return $section;
+		return array_merge( $this->get_default_section(), $section );
 	}
 
 

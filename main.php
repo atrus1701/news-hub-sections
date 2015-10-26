@@ -211,7 +211,7 @@ function nhs_get_wpquery_section( $wpquery = null )
 		{
 			$post_type = get_post_type( $post_id );
 			$taxonomies = nh_get_taxonomies( $post_id );
-			$section = nhs_get_section( $post_type, $taxonomies, false, array('news') );
+			$section = nhs_get_section( $post_type, $taxonomies, false );
 		}
 		else
 		{
@@ -231,7 +231,7 @@ endif;
  * 
  */
 if( !function_exists('nhs_get_section') ):
-function nhs_get_section( $post_types, $taxonomies = array(), $return_null = false, $exclude_sections = array() )
+function nhs_get_section( $post_types, $taxonomies = array(), $return_null = FALSE )
 {
 	global $nhs_sections;
 
@@ -248,12 +248,13 @@ function nhs_get_section( $post_types, $taxonomies = array(), $return_null = fal
 	// cycle through each section looking for exact taxonomy and post type match
 	foreach( $nhs_sections as $key => $section )
 	{
-		if( in_array($key, $exclude_sections) ) continue;
+		if( $section->priority == -1 ) continue;
 		if( !$section->is_post_type($post_types) ) continue;
 		
 		if( !$section->has_taxonomies() )
 		{
-			$type_match = $section;
+			if( $type_match === NULL || $section->priority < $type_match->priority )
+				$type_match = $section;
 			continue;
 		}
 		
@@ -285,14 +286,22 @@ function nhs_get_section( $post_types, $taxonomies = array(), $return_null = fal
 		
 		if( ($taxonomy_count == $match_count) && ($taxonomy_count == $section_count) )
 		{
-			$exact_match = $section;
-			break;
+			if( $exact_match === NULL || $section->priority < $exact_match->priority )
+				$exact_match = $section;
+			continue;
 		}
+
+		if( $match_count === 0 ) continue;
 		
 		if( $match_count > $best_count )
 		{
 			$partial_match = $section;
 			$best_count = $match_count;
+		}
+		elseif( $match_count == $best_count )
+		{
+			if( $partial_match === NULL || $section->priority < $partial_match->priority )
+				$partial_match = $section;
 		}
 	}
 	
