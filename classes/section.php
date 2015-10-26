@@ -326,7 +326,7 @@ class NHS_Section
 		if( $this->thumbnail_image == 'embed' )
 			$story['embed'] = $this->get_embed_code( $post->post_content );
 		else
-			$story['image'] = $this->get_image( $post->ID, 'thumbnail' );
+			$story['image'] = $this->get_image( $post->ID, 'medium' );
 		
 		$story['description'] = array();
 		$story['description']['excerpt'] = $this->get_excerpt( $post );
@@ -352,7 +352,7 @@ class NHS_Section
 		if( $this->thumbnail_image == 'embed' )
 			$story['embed'] = $this->get_embed_code( $post->post_content );
 		else
-			$story['image'] = $this->get_image( $post->ID, 'thumbnail' );
+			$story['image'] = $this->get_image( $post->ID, 'medium' );
 
 		$story['description'] = array();
 		$story['description']['excerpt'] = $this->get_excerpt( $post );
@@ -381,7 +381,7 @@ class NHS_Section
 	{
 		$story = array();
 		$story['title'] = $this->get_title( $post );
-		$story['image'] = $this->get_image( $post->ID, 'thumbnail' );
+		$story['image'] = $this->get_image( $post->ID, 'full' );
 		$story['byline'] = $this->get_byline( $post );
 		$story['description'] = array();
 		$story['description']['text'] = $this->get_content( $post );
@@ -527,32 +527,8 @@ class NHS_Section
 	 */
 	public function get_image( $post_id, $type )
 	{
-		switch( $type )
-		{
-			case 'featured':
-				if( $this->featured_image == 'none' ) return null;
-				$image_type = 'featured_'.$this->featured_image;
-				break;
-				
-			case 'thumbnail':
-				if( $this->thumbnail_image == 'none' ) return null;
-				$image_type = 'thumbnail_'.$this->featured_image;
-				break;
-			
-			case 'featured_portrait':
-			case 'featured_landscape':
-			case 'thumbnail_portrait':
-			case 'thumbnail_landscape':
-				$image_type = $type;
-				break;
-					
-			default:
-				return null;
-				break;
-		}
-		
 		$image = wp_get_attachment_image_src(
-			get_post_thumbnail_id( $post_id ), $image_type
+			get_post_thumbnail_id( $post_id ), $type
 		);
 		
 		if( $image ) 

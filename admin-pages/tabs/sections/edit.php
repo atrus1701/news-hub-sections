@@ -284,7 +284,7 @@ class NHS_SectionsEditTabAdminPage extends APL_TabAdminPage
 		?>
 		<select name="<?php apl_name_e( NHS_SECTIONS, $name ); ?>">
 
-		<?php foreach( array( 'none', 'landscape', 'portrait', 'embed' ) as $image_type ): ?>
+		<?php foreach( array( 'none', 'normal', 'landscape', 'portrait', 'embed' ) as $image_type ): ?>
 			<option value="<?php echo $image_type; ?>" 
 			    <?php selected( $current_value, $image_type ); ?>>
 			<?php echo $image_type; ?>
