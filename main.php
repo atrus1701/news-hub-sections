@@ -90,6 +90,7 @@ endif;
 
 
 add_filter( 'pre_get_posts', 'nhs_alter_main_query' );
+add_filter( 'vtt-post-type', 'nhs_get_post_type', 10, 2 );
 
 add_action( 'wp_ajax_news-hub-sections', 'nhs_perform_ajax_request' );
 
@@ -168,14 +169,14 @@ function nhs_get_wpquery_section( $wpquery = null )
 			$taxonomy = get_taxonomy( $qo->taxonomy );
 			if( $taxonomy ) $post_types = $taxonomy->object_type;
 			
-			$section = nhs_get_section( $post_types, array( $qo->taxonomy => $qo->slug ), false );
+			$section = nhs_get_section( $post_types, array( $qo->taxonomy => $qo->slug ), FALSE );
 			$wpquery->set( 'section', $section );
 			
 			return $section;
 		}
 		elseif( $wpquery->is_post_type_archive() )
 		{
-			$section = nhs_get_section( $qo->name, null, false );
+			$section = nhs_get_section( $qo->name, null, FALSE );
 			$wpquery->set( 'section', $section );
 			return $section;
 		}
@@ -193,12 +194,12 @@ function nhs_get_wpquery_section( $wpquery = null )
 			{
 				global $wpdb;
 				
-				$post_type = $wp_query->get( 'post_type', false );
+				$post_type = $wp_query->get( 'post_type', FALSE );
 				if( !$post_type ) $post_type = 'post';
 				
-				$post_slug = $wp_query->get( 'name', false );
+				$post_slug = $wp_query->get( 'name', FALSE );
 				
-				if( $post_slug !== false )
+				if( $post_slug !== FALSE )
 					$post_id = $wpdb->get_var( "SELECT ID FROM $wpdb->posts WHERE post_type = '$post_type' AND post_name = '$post_slug'" );
 			}
 		}
@@ -419,6 +420,23 @@ function nhs_perform_ajax_request()
 
 	echo json_encode( $output );
 	exit();
+}
+endif;
+
+
+if( !function_exists('nhs_get_post_type') ):
+function nhs_get_post_type( $post_type, $post )
+{
+	apl_print('nhs_get_post_type');
+	
+	$section = nhs_get_section(
+		array( $post_type ), 
+		nhs_get_taxonomies( $post->ID ),
+		TRUE );
+
+	if( $section === NULL ) return $post_type;
+
+	return $section->key;
 }
 endif;
 
