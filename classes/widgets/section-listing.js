@@ -40,7 +40,7 @@ jQuery(document).ready(
 		return this.each(function()
 		{
 			$( document ).on( 'widget-updated', widget_updated );
-			$( document ).on( 'widget-synced', [this, []] );
+			$( document ).on( 'widget-synced', widget_updated );
 			$( document ).trigger( 'widget-updated', [this] );
 		});
 
@@ -69,6 +69,8 @@ jQuery(document).ready(
 			});
 
 			$(self).find('.widget-control-save').show();
+			event.preventDefault();
+			return false;
 		}
 
 
