@@ -211,7 +211,7 @@ function nhs_get_wpquery_section( $wpquery = null )
 		if( $post_id )
 		{
 			$post_type = get_post_type( $post_id );
-			$taxonomies = nh_get_taxonomies( $post_id );
+			$taxonomies = nhs_get_taxonomies( $post_id );
 			$section = nhs_get_section( $post_type, $taxonomies, false );
 		}
 		else
