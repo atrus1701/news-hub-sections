@@ -1,0 +1,176 @@
+	.section-box {
+		margin-bottom:3em;
+	}
+	
+	.section-box h2 {
+		border-bottom:solid 1px #ccc;
+		padding:0.2em 0em;
+	}
+
+	.section-box h2 a {
+		color:#000;
+		font-size:0.9em;
+		font-weight:bold;
+	}
+
+	.section-box h2 a:hover {
+		text-decoration:none;
+	}
+
+	.section-box .no-posts {
+		margin:1em;
+	}
+
+	.section-box .more {
+		text-align:right;
+	}
+
+	.section-box .more > a {
+		color:#333;
+		text-decoration:none;
+	}
+
+	.section-box .more > a:hover {
+		text-decoration:underline;
+	}
+
+			font-size:0.85rem;
+		margin-bottom:1em;
+	}
+
+	.story.single {
+		font-size:1rem;
+	}
+
+	.story.listing {
+		overflow:hidden;
+	}
+
+	.story.listing h3 {
+		font-weight:bold;
+		margin-top:0.5em;
+		margin-bottom:0em;
+	}
+
+	.story.listing h3:hover {
+		text-decoration:underline;
+	}
+
+	.story.listing h3 > a {
+	    color:#000;
+	}
+
+	.story .byline {
+		margin-top:0.2em;
+		margin-bottom:0.5em;
+		font-size:0.8em;
+	}
+	
+	.story .image img {
+		display:block;
+		width:100%;
+	}
+	
+	.story.landscape-image .image,
+	.story.portrait-image .image {
+		width:40%;
+		height:0;
+		padding-bottom:40%;
+    	background-position: center;
+    	background-size: cover;
+       	background-repeat: no-repeat;
+    	float:left;
+    	margin-right:0.5em;
+    	margin-bottom:0.5em;
+    	background-color:#ccc !important;
+	}
+
+	.story.normal-image .image {
+		width:40%;
+		float:right;
+		margin-left:0.5em;
+		margin-bottom:0.5em;
+	}
+
+	.story.normal-image h3 {
+		margin-top:0em;
+	}
+
+	.story.embed-image .image {
+	    height:auto;
+	    padding:0;
+	    float:left;
+	    width:40%;
+	    margin-right:0.5em;
+	    margin-bottom:0.5em;
+	}
+
+	.story .excerpt {
+		color:#666 !important;
+	}
+
+
+
+/****************************************************************************************
+ * Desktop PC-sized device or larger.
+ ****************************************************************************************/
+
+@media (min-width: 64.063em) {
+
+	.story .image {
+	    display:hidden;
+	}
+	
+	.story.landscape-image .image {
+	    width:100%;
+	    height:0;
+	    padding-bottom:60%;
+	    background-size:100%;
+	    background-size:cover;
+        background-position: center;
+	    background-repeat: no-repeat;
+	}
+
+	.story.embed-image .image {
+		width:100%;
+	    float:none;
+	}
+
+	.story.portrait-image .image {
+		width:40%;
+		height:0;
+		padding-bottom:60%;
+		background-size:100%;
+	    background-size:cover;
+    	background-position: center;
+    	background-repeat: no-repeat;
+    	float:left;
+    	margin-right:0.5em;
+    	margin-bottom:0.5em;
+    }
+
+	body.search-results .story .image {
+		width:20%;
+		height:0;
+	    padding-bottom:20%;
+	}
+
+	body.search-results .story.portrait-image .image {
+	    padding-bottom:30%;
+	}
+
+	body.search-results .story.landscape-image .image {
+	    padding-bottom:12%;
+	}
+
+	body.search-results .story.embed-image .image {
+	    height:auto;
+	    padding:0;
+	}
+
+	.story.portrait-image .details {
+		display:inline;
+	}
+}
+
+

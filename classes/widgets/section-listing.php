@@ -8,7 +8,7 @@ require_once( NHS_PLUGIN_PATH.'/classes/model.php' );
  * The NHS_WidgetSectionListingControl class for the "UNC Charlotte News Hub" theme.
  * 
  * Shortcode Example:
- * [section_listing name="section_name" items="2"]
+ * [section_listing section="section_name" items="2"]
  * 
  * @package    unc-charlotte-news-hub-theme
  * @subpackage classes/widgets
@@ -57,6 +57,15 @@ class NHS_WidgetSectionListingControl extends WidgetShortcodeControl
 	public function admin_enqueue_scripts()
 	{
 		wp_enqueue_script( 'section-listing', NHS_PLUGIN_URL.'/classes/widgets/section-listing.js' );
+	}
+
+
+	/**
+	 * Enqueues the scripts or styles needed for the control in the site frontend.
+	 */
+	public function enqueue_scripts()
+	{
+		wp_enqueue_style( 'section-listing', NHS_PLUGIN_URL.'/classes/widgets/style.css' );
 	}
 	
 
