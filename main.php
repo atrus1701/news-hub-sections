@@ -3,7 +3,7 @@
 Plugin Name: News Hub Sections
 Plugin URI: https://github.com/clas-web/news-hub-sections
 Description: 
-Version: 1.0.0
+Version: 1.1.0
 Author: Crystal Barton
 Author URI: https://www.linkedin.com/in/crystalbarton
 */
