@@ -13,19 +13,19 @@ var SectionListing = {
 
 	widget_updated: function( event, self ) {
 
-		if( ! $(self).find( '.widget-content select[name^="widget-section_listing"]' ) ) return;
+		if( ! jQuery(self).find( '.widget-content select[name^="widget-section_listing"]' ).length ) return;
 
-		var section_select = $(self).find( '.widget-content select[name^="widget-section_listing"]' ).get(0);
-		var items_select = $(self).find( '.widget-content select[name^="widget-section_listing"]' ).get(1);
-		var hidden_input = $(self).find( '.widget-content .section-data' );
-		var title = $(self).find( '.widget-top h4 .in-widget-title' );
-		var post_list = $(self).find( '.widget-content .post-list' );
-		var section_select_name = $(section_select).attr( 'name' );
+		var section_select = jQuery(self).find( '.widget-content select[name^="widget-section_listing"]' ).get(0);
+		var items_select = jQuery(self).find( '.widget-content select[name^="widget-section_listing"]' ).get(1);
+		var hidden_input = jQuery(self).find( '.widget-content .section-data' );
+		var title = jQuery(self).find( '.widget-top h4 .in-widget-title' );
+		var post_list = jQuery(self).find( '.widget-content .post-list' );
+		var section_select_name = jQuery(section_select).attr( 'name' );
 		var name = section_select_name.split( '][' );
 		name = name[0] + ']';
 
-		var update_button = $(self).find( '.widget-content button' );
-		$(update_button).click( function(e) {
+		var update_button = jQuery(self).find( '.widget-content button' );
+		jQuery(update_button).click( function(e) {
 
 			e.preventDefault();
 			SectionListing.update_post_edit( section_select, items_select, hidden_input, title, post_list, name );
@@ -33,14 +33,14 @@ var SectionListing = {
 
 		});
 
-		$(self).find( '.widget-control-save' ).show();
+		jQuery(self).find( '.widget-control-save' ).show();
 		event.preventDefault();
 		return false;
 	},
 
 	update_post_edit: function( section_select, items_select, hidden_input, title, post_list, name ) {
 
-		var current_section = $(section_select).find( ':selected' ).val();
+		var current_section = jQuery(section_select).find( ':selected' ).val();
 
 		// setup up AJAX data.
 		var data = {};
@@ -49,7 +49,7 @@ var SectionListing = {
 		data['section'] = current_section;
 
 		// perform the AJAX request.
-		$.ajax({
+		jQuery.ajax({
 			type: 'GET',
 			url: ajaxurl,
 			data: data,
@@ -64,23 +64,23 @@ var SectionListing = {
 				return;
 			}
 
-			var hidden_input_values = $( hidden_input ).val().split( ',' );
+			var hidden_input_values = jQuery( hidden_input ).val().split( ',' );
 			var previous_section = hidden_input_values[0];
 			var previous_items = hidden_input_values[1];
 
 			previous_selected_items = [];
 			if ( previous_section == current_section )
 			{
-				var post_list_selects = $(post_list).find( 'select' );
+				var post_list_selects = jQuery(post_list).find( 'select' );
 				for ( var i = 0; i < post_list_selects.length; i++ )
 				{
-					previous_selected_items.push( $( post_list_selects[i] ).find( ':selected' ).val() );
+					previous_selected_items.push( jQuery( post_list_selects[i] ).find( ':selected' ).val() );
 				}
 			}
 
-			var current_items = parseInt( $( items_select ).find( ':selected' ).val() );
+			var current_items = parseInt( jQuery( items_select ).find( ':selected' ).val() );
 
-			$( post_list ).html( '' );
+			jQuery( post_list ).html( '' );
 
 			for ( var i = 0; i < current_items; i++ )
 			{
@@ -108,10 +108,10 @@ var SectionListing = {
 				html += '</select>';
 				html += '</p>';
 
-				$( post_list ).append( html );
+				jQuery( post_list ).append( html );
 			}
 
-			$( hidden_input ).val( current_section + ',' + current_items );
+			jQuery( hidden_input ).val( current_section + ',' + current_items );
 		})
 		.fail(function( jqXHR, textStatus )
 		{
