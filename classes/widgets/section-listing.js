@@ -1,7 +1,7 @@
 
 
 jQuery(document).ready( function() {
-	// setup the Section Listing widgets
+	jQuery( document ).on( 'widget-added', SectionListing.widget_updated );
 	jQuery( document ).on( 'widget-updated', SectionListing.widget_updated );
 	jQuery( document ).on( 'widget-synced', SectionListing.widget_updated );
 	jQuery( '.widget' ).each( function() {
