@@ -4,7 +4,9 @@ jQuery(document).ready( function() {
 	// setup the Section Listing widgets
 	jQuery( document ).on( 'widget-updated', SectionListing.widget_updated );
 	jQuery( document ).on( 'widget-synced', SectionListing.widget_updated );
-	jQuery( '.widget' ).trigger( 'widget-updated', [this] );
+	jQuery( '.widget' ).each( function() {
+		jQuery( document ).trigger( 'widget-updated', [ this ] );
+	});
 });
 
 
