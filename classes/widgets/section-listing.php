@@ -142,9 +142,9 @@ class NHS_WidgetSectionListingControl extends WidgetShortcodeControl
 
 		<p><button>Update</button></p>
 
-		<div class="post-list">
-
 		<h4>Selected Posts</h4>
+
+		<div class="post-list">
 
 		<?php for( $i = 0; $i < $items; $i++ ): ?>
 		
