@@ -131,9 +131,8 @@ class NHS_Section
 			if( count($terms) == 0 ) unset($this->taxonomies[$taxname]);
 		}
 
-		$this->archive_page_stories = $section['archive_page_stories'];
-		$this->rss_feed_stories = $section['rss_feed_stories'];
-
+		$this->archive_page_stories = ( isset($section['archive_page_stories']) ? intval($section['archive_page_stories']) : 10 );
+		$this->rss_feed_stories = ( isset($section['rss_feed_stories']) ? intval($section['rss_feed_stories']) : 10 );
 		$this->priority = ( isset($section['priority']) ? intval($section['priority']) : 5 );
 	}
 	
