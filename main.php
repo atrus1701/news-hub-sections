@@ -94,7 +94,7 @@ add_filter( 'vtt-post-type', 'nhs_get_post_type', 10, 2 );
 
 add_action( 'wp_ajax_news-hub-sections', 'nhs_perform_ajax_request' );
 
- 
+
 /**
  * Setup the admin pages.
  */
@@ -123,7 +123,7 @@ endif;
 if( !function_exists('nhs_enqueue_scripts') ):
 function nhs_enqueue_scripts()
 {
-	wp_enqueue_style( 'nhs-style', UNHT_THEME_URL.'/admin-pages/styles/style.css' );
+	wp_enqueue_style( 'nhs-style', NHS_PLUGIN_URL.'/admin-pages/styles/style.css' );
 }
 endif;
 
@@ -137,8 +137,8 @@ function nhs_update()
 	$version = get_theme_mod( NHS_DB_VERSION_OPTION, '1.0.0' );
 	if( $version !== NHS_DB_VERSION )
 	{
-//		$model = OrgHub_Model::get_instance();
-//		$model->create_tables();
+		$model = NHS_Model::get_instance();
+//		$model->create_tables(); // NO tables...
 	}
 	
 	set_theme_mod( NHS_DB_VERSION_OPTION, NHS_DB_VERSION );
@@ -427,8 +427,6 @@ endif;
 if( !function_exists('nhs_get_post_type') ):
 function nhs_get_post_type( $post_type, $post )
 {
-	apl_print('nhs_get_post_type');
-	
 	$section = nhs_get_section(
 		array( $post_type ), 
 		nhs_get_taxonomies( $post->ID ),

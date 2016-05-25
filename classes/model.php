@@ -97,7 +97,7 @@ class NHS_Model
 	public function get_sections( $offset = 0, $limit = NULL )
 	{
 		$sections = get_option( NHS_SECTIONS, array() );
-		return array_slice( $sections, $offsets, $limit );
+		return array_slice( $sections, $offset, $limit );
 	}
 
 
