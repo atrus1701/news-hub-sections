@@ -248,13 +248,13 @@ class NHS_Model
 	{
 		global $wp_filter;
 		$filters = $wp_filter['sanitize_option_'.NHS_SECTIONS];
-		$wp_filter['sanitize_option_'.NHS_SECTIONS] = array();
-		
+		unset($wp_filter['sanitize_option_'.NHS_SECTIONS]);
+				
 		update_option( NHS_SECTIONS, $sections );
-
+		
 		$wp_filter['sanitize_option_'.NHS_SECTIONS] = $filters;
 	}
-
+	
 }
 endif;
 
