@@ -62,7 +62,7 @@
 			$nhs_section->get_section_link(), 
 			$nhs_section->name.' Archives', 
 			null,
-			'More <em>'.$nhs_section->name.'</em> &raquo;' ); ?>
+			'More <em>'.$nhs_section->title.'</em> &raquo;' ); ?>
 	</div><!-- .more -->
 
 </div><!-- .section-box -->
