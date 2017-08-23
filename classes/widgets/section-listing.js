@@ -4,9 +4,10 @@ jQuery(document).ready( function() {
 	jQuery( document ).on( 'widget-added', SectionListing.widget_updated );
 	jQuery( document ).on( 'widget-updated', SectionListing.widget_updated );
 	jQuery( document ).on( 'widget-synced', SectionListing.widget_updated );
-	jQuery( '.widget' ).each( function() {
-		jQuery( document ).trigger( 'widget-updated', [ this ] );
-	});
+	// Removing this appears to fix the broken javascript that occurs after WP 4.6
+	//jQuery( '.widget' ).each( function() {
+		//jQuery( document ).trigger( 'widget-updated', [ this ] );
+	//});
 });
 
 
