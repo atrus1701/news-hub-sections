@@ -1,6 +1,5 @@
 <?php
 
-require_once( __DIR__.'/widget-shortcode-control.php' );
 require_once( NHS_PLUGIN_PATH.'/classes/model.php' );
 
 
@@ -251,7 +250,7 @@ class NHS_WidgetSectionListingControl extends WidgetShortcodeControl
 		$nhs_section = $section;
 		$nhs_stories = $story_posts;
 		include( $template_section_list );
-	
+
 		echo '</div>';
 		echo $args['after_widget'];		
 	}
