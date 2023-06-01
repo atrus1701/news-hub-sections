@@ -39,17 +39,22 @@
 					<div class="byline"><?php echo $byline; ?></div>
 				<?php endif; ?>
 				
-				<?php if( count($description) > 0 ): ?>
+				<?php 
+				if(is_array($description) || $description instanceof Countable) {
+					$count = count($description);
+					if($count > 0) {
+				?>
 
-					<div class="description">
+						<div class="description">
+						<?php foreach($description as $key => $value): ?>
+							<div class="<?php echo $key; ?>"><?php echo $value; ?></div>
+						<?php endforeach; ?>
+						</div><!-- .description -->
 
-					<?php foreach( $description as $key => $value ): ?>
-						<div class="<?php echo $key; ?>"><?php echo $value; ?></div>
-					<?php endforeach; ?>
-					
-					</div><!-- .description -->
-
-				<?php endif; ?>
+				<?php 
+					} 
+				}
+				?>
 			
 			</div><!-- .details -->
 			
