@@ -3,8 +3,8 @@
 Plugin Name: News Hub Sections
 Plugin URI: https://github.com/clas-web/news-hub-sections
 Description: 
-Version: 1.2.4
-Author: Crystal Barton, Aaron Forsyth
+Version: 1.2.5
+Author: Crystal Barton, Aaron Forsyth, Alex Chapin
 Author URI: https://pages.uncc.edu/oat
 GitHub Plugin URI: https://github.com/clas-web/news-hub-sections
 */
